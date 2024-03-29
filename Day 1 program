@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+void child() {
+  printf("Child process is created by fork() system call");
+}
+void parent() {
+  printf("parent process is created by fork() system call");
+}
+int main(void) {
+  pid_t p = fork();
+  if(p == 0) {
+    child();
+    exit(EXIT_SUCCESS);
+  }
+  else if(p > 0) {
+    wait(NULL);
+    parent();
+  }
+  else {
+    printf("fork() system call is unable to create child process.");
+  }
+  return EXIT_SUCCESS;
+}
